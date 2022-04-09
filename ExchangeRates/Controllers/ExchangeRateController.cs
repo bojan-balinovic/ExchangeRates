@@ -1,4 +1,5 @@
 ﻿using ExchangeRates.Repository.Contractors;
+using ExchangeRates.Repository.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -14,12 +15,10 @@ namespace ExchangeRates.Controllers
     public class ExchangeRateController : ControllerBase
     {
         public IExchangeRateRepository Repository { get; }
-        public IConfiguration Configuration { get; }
 
-        public ExchangeRateController(IExchangeRateRepository repository, IConfiguration configuration)
+        public ExchangeRateController(IExchangeRateRepository repository)
         {
             Repository = repository;
-            Configuration = configuration;
         }
 
 
@@ -28,5 +27,6 @@ namespace ExchangeRates.Controllers
         {
             return Ok(await Repository.GetAll(from, to));
         }
+
     }
 }

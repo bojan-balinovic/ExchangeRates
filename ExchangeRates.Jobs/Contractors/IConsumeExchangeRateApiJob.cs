@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExchangeRates.Jobs.Contractors
 {
-    public interface IConsumeExchangeRateApiJob
+    public interface IConsumeExchangeRateApiJob:IJob
     {
         public Task Consume(DateTime? date=default);
         Task<ExchangeRateDataJson> MakeGetRequest(DateTime exchangeRateDate);

@@ -16,7 +16,7 @@ namespace ExchangeRates.Test.Jobs
 {
     public class MockUp : ConsumeExchangeRateApiJob, IConsumeExchangeRateApiJob
     {
-        public MockUp(IConfiguration configuration, IServiceScopeFactory scopeFactory):base(configuration, scopeFactory)
+        public MockUp(IServiceScopeFactory scopeFactory):base(scopeFactory)
         {
 
         }

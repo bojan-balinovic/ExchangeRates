@@ -83,17 +83,16 @@ namespace ExchangeRates
 
             app.UseHangfireDashboard();
 
+            // Setting recurring cron-job
             var reccuringJobManager = app.ApplicationServices.GetRequiredService<IRecurringJobManager>();
             var consumeExchangeRateApiJob = app.ApplicationServices.GetRequiredService<IConsumeExchangeRateApiJob>();
             reccuringJobManager.AddOrUpdate(
                 "get-exchange-rates-from-3rd-party-api",
-                () => consumeExchangeRateApiJob.Consume(DateTime.Today),
-               "0 * * ? * *");
-        }
-        public static void DoSomething()
-        {
-            Console.WriteLine("something");
-            Debug.Write("something");
+                () => consumeExchangeRateApiJob.Start(),
+               "0 0 ? * * *");  // once a day at 00:00AM
+
+            consumeExchangeRateApiJob.Start();  // run job first time at startup
+
         }
 
     }

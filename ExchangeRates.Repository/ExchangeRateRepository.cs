@@ -18,20 +18,26 @@ namespace ExchangeRates.Repository
         public async Task<ExchangeRate> AddOne(ExchangeRate exchangeRate)
         {
             await Context.ExchangeRates.AddAsync(exchangeRate);
+            await Context.SaveChangesAsync();
             return exchangeRate;
         }
 
-        public async Task<IEnumerable<ExchangeRate>> GetAll(DateTime? from, DateTime? to)
+        public async Task<IEnumerable<ExchangeRate>> GetAll(DateTime from=default(DateTime), DateTime to=default(DateTime))
         {
-            if (from == null)
+            if (from == default(DateTime) && to == default(DateTime))
+            {
+                return Context.ExchangeRates.ToList();
+            }
+            if (from == default(DateTime))
             {
                 from = DateTime.Today;
             }
-            if(to == null)
+            if(to == default(DateTime))
             {
                 to = DateTime.Today;
             }
-            var exchangeRates = Context.ExchangeRates.Where(e => e.Date >= from.Value.Date && e.Date <= to.Value.Date);
+         
+            var exchangeRates = Context.ExchangeRates.Where(e => e.Date >= from.Date && e.Date <= to.Date);
             return exchangeRates;
         }
 
@@ -40,10 +46,11 @@ namespace ExchangeRates.Repository
             var exchangeRate = await Context.ExchangeRates.FindAsync(id);
             return exchangeRate;
         }
+
         public async Task<ExchangeRate> GetByDate(DateTime date)
         {
             var exchangeRate = Context.ExchangeRates.Where(e=>e.Date==date).FirstOrDefault();
-            return await Task.FromResult(exchangeRate);
+            return exchangeRate;
         }
     }
 }

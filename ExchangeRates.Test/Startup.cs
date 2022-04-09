@@ -40,7 +40,6 @@ namespace ExchangeRates.Test
         public void ConfigureServices(IServiceCollection services)
         {
 
-       
             services.AddDbContext<MainContext>(options =>
             {
                 options.UseInMemoryDatabase("test");
@@ -48,15 +47,7 @@ namespace ExchangeRates.Test
             services.AddTransient<IExchangeRateRepository, ExchangeRateRepository>();
             services.AddTransient<IConsumeExchangeRateApiJob, MockUp>();
             services.AddSingleton<ITestOutputHelper, TestOutputHelper>();
-            //services.AddHangfire(options =>
-            //{
-            //    options.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-            //     .UseColouredConsoleLogProvider()
-            //     .UseSimpleAssemblyNameTypeSerializer()
-            //     .UseRecommendedSerializerSettings();
-
-            //});
-            //services.AddHangfireServer();
+  
         }
     }
 }
